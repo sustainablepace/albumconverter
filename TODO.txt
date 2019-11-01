@@ -1,0 +1,7 @@
+Incident
+- Invalid characters in filename (like ?)
+
+Improvement
+- Smart guess the album id at allmusic from folder name
+- User needs to confirm if crawled data is valid
+
