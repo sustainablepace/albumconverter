@@ -11,10 +11,17 @@ docker build -t <image> .
 docker run -itd -v <host folder with flac>:/flac --name <container> <image>
 ```
 
+for example
+
+```
+docker build -t album .
+docker run -itd -v ~/Music/Convert:/flac --name album album
+```
+
 ## Work on the FLAC files
 
 ```
-docker exec -it <container>> /bin/bash
+docker exec -it <container> /bin/bash
 
 cd /flac
 
