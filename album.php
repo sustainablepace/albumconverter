@@ -59,6 +59,10 @@ class AlbumConverter {
 		for( $i = 0; $i < $flacLimit; $i++ ) {
 			$this->exec("flac -d " . escapeshellarg( $flac[ $i ] ) );
 		}
+		$wav = glob("*.wav");
+		if($flacLimit != count($wav)) {
+			exit("FLAC decode error! Aborting.\n");
+		}
 	}
 
 	public function joinWav( $limit = null ) {
