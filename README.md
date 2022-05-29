@@ -2,6 +2,12 @@ Converts a set of FLAC files into a single seamless mp3 file with tags from http
 
 # Using Docker
 
+## Start Docker
+
+```
+colima start --mount ~/Music/Convert/:w --verbose
+```
+
 ## Build the image and start a container
 
 and mount a host folder with FLAC files
