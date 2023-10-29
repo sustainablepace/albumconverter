@@ -2,7 +2,7 @@
     "name": "sustainablepace/albumconverter",
     "description": "Convert a set of flac files into a single file",
     "require": {
-        "james-heinrich/getid3": "1.9.21",
+        "james-heinrich/getid3": "1.9.23",
 	"zendframework/zend-dom": "2.5.1",
 	"zendframework/zend-http": "2.5.2",
 	"zendframework/zend-validator": "2.5.2"

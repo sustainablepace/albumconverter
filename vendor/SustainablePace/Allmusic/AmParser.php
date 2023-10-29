@@ -85,22 +85,22 @@ class AmParser {
 
         $content = $this->getter->getContent( $this->getAlbumUrl( $albumId ) );
         $dom = new Query( $content );
-        $artistNodes = $dom->execute( 'h2.album-artist a' );
-	$artist = new AmArtist();
-	if( empty( $artistNodes ) ) {
-	        $artistNodes = $dom->execute( 'h2.album-artist span' );
-	}
-        if( count( $artistNodes ) === 1 ) {
-		$node = $artistNodes[ 0 ];
-		$urlname = trim( $node->getAttribute( 'href' ) );
-		$name = trim( $node->textContent );
-		$id = static::getIdFromUrlName( $urlname );
-		$artist->setId( $id );
-		$artist->setName( $name );
-		$components = explode( '/', $urlname );
-		$artist->setUrlName( array_pop( $components ) );
+        $artistNodes = $dom->execute( 'h2#albumArtists a' );
+        $artist = new AmArtist();
+        if( empty( $artistNodes ) ) {
+                $artistNodes = $dom->execute( 'h2.album-artist span' );
         }
-	$album->setArtist( $artist );
+        if( count( $artistNodes ) >= 1 ) {
+            $node = $artistNodes[ 0 ];
+            $urlname = trim( $node->getAttribute( 'href' ) );
+            $name = trim( $node->textContent );
+            $id = static::getIdFromUrlName( $urlname );
+            $artist->setId( $id );
+            $artist->setName( $name );
+            $components = explode( '/', $urlname );
+            $artist->setUrlName( array_pop( $components ) );
+        }
+	    $album->setArtist( $artist );
 
         $yearNodes = $dom->execute( 'div.release-date > span' );
         if( count( $yearNodes ) === 1 ) {
@@ -111,28 +111,28 @@ class AmParser {
 		}
         }
 
-        $nameNodes = $dom->execute( 'h1.album-title' );
+        $nameNodes = $dom->execute( 'h1#albumTitle' );
         if( count( $nameNodes ) === 1 ) {
-		$nameNode = $nameNodes[ 0 ];
-		$name = trim( $nameNode->textContent );
-		$album->setName( $name );
+            $nameNode = $nameNodes[ 0 ];
+            $name = trim( $nameNode->textContent );
+            $album->setName( $name );
         }
  
-        $descriptionNodes = $dom->execute( 'section.review > div.text' );
-        if( count( $descriptionNodes ) === 1 ) {
-		$descriptionNode = $descriptionNodes[ 0 ];
-		$description = trim( $descriptionNode->textContent );
-		$album->setDescription( $description );
+        $descriptionNodes = $dom->execute( '#review > p' ); //doesn't work any longer - maybe deferred loading...
+        if( count( $descriptionNodes ) >= 1 ) {
+            $descriptionNode = $descriptionNodes[ 0 ];
+            $description = trim( $descriptionNode->textContent );
+            $album->setDescription( $description );
         }
  
-        $coverNodes = $dom->execute( 'div.album-contain > img' );
+        $coverNodes = $dom->execute( 'img#posterImage' );
         if( count( $coverNodes ) >= 1 ) {
-		$coverNode = $coverNodes[ 0 ];
-		$coverUrl = trim( $coverNode->getAttribute( 'src' ) );
-		$album->setCoverUrl( $coverUrl );
+            $coverNode = $coverNodes[ 0 ];
+            $coverUrl = trim( $coverNode->getAttribute( 'src' ) );
+            $album->setCoverUrl( $coverUrl );
         }
 
-	return $album;
+	    return $album;
     }
 
     /**

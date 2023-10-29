@@ -159,9 +159,10 @@ if( !$album->getName() ) {
 if( !$album->getYear() ) {
 	$album->setYear( (int)readline("Album year: ") );
 }
-if( !$album->getDescription() ) {
-	$album->setDescription( readline("Album description: ") );
-}
+
+#if( !$album->getDescription() ) {
+#	$album->setDescription( readline("Album description: ") );
+#}
 if( !$album->getCoverUrl() ) {
 	$album->setCoverUrl( readline("Album cover url: ") );
 }
